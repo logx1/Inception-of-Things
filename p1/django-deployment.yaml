@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: django-app
+  name: django-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-app
+  template:
+    metadata:
+      labels:
+        app: django-app
+    spec:
+      containers:
+      - image: django:latest
+        name: django
+        ports:
+        - containerPort: 8000
+        # These additions are crucial for Django to work:
+        command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+        env:
+        - name: DJANGO_ALLOWED_HOSTS
+          value: "*"
+        - name: PYTHONUNBUFFERED
+          value: "1"
