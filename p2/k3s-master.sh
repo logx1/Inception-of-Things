@@ -2,10 +2,8 @@
 curl -sfL https://get.k3s.io | sh -
 
 while [ ! -f /var/lib/rancher/k3s/server/node-token ]; do
-    echo "Waiting for node token to be available..."
+    echo "Waiting for k3s server to start..."
     sleep 2
 done
 
-TOKEN=$(sudo cat /var/lib/rancher/k3s/server/node-token)
-
-echo $TOKEN > /vagrant/token
+echo "K3s server started successfully."
