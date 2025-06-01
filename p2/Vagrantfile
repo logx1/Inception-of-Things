@@ -7,8 +7,8 @@ Vagrant.configure("2") do |config|
     master.vm.hostname = "abdel-ouS"
     master.vm.network "private_network", ip: "192.168.56.10"
     master.vm.provider "virtualbox" do |vb|
-      vb.memory = "1024"
-      vb.cpus = 1
+      vb.memory = "2848"
+      vb.cpus = 4
       vb.name = 'abdel-ouS'
     end
     master.vm.provision "shell", path: "k3s-master.sh"
