@@ -1,12 +1,12 @@
 apiVersion: v1
-kind: Service
+kind: Pod
 metadata:
-  name: nginx-service
+  name: website
 spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
-  type: NodePort
+  containers:
+  - image: nginx
+    name: web
+    ports:
+    - containerPort: 80
+      name: http
+      protocol: TCP
