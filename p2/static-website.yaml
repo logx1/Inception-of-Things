@@ -6,22 +6,40 @@ metadata:
     app: website         
 spec:
   containers:
-  - image: nginx
+  - image: ealen/echo-server:latest
     name: web
     ports:
     - containerPort: 80
       name: http
       protocol: TCP
 ---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: websites
+  labels:                
+    app: websites       
+spec:
+  containers:
+  - image: ealen/echo-server:latest
+    name: web
+    ports:
+    - containerPort: 80
+      name: http
+      protocol: TCP
+---
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: website
+  name: websites
 spec:
   selector:
-    app: website
+    app: websites
   ports:
   - port: 80
     targetPort: 80
     protocol: TCP
+    nodePort: 30000 # if o not ser the port is randomly assigned between 30000 and 32767
   type: NodePort
