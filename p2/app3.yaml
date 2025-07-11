@@ -1,35 +1,28 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: app1
-  labels:                
-    app: app1         
+  name: app3
+  labels:
+    app: app3
 spec:
   containers:
   - image: nginx:latest
-    name: app1
-    volumesMounts:
-    - mountPath: /usr/share/nginx/html
-      name: app1-volume
+    name: app3
     ports:
     - containerPort: 80
       name: http
       protocol: TCP
-  volumes:
-  - name: app1-volume
-    emptyDir: {}
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
-  name: app1-service
+  name: app3-service
 spec:
   selector:
-    app: app1
+    app: app3
   ports:
   - port: 80
     targetPort: 80
     protocol: TCP
-    nodePort: 30000
+    nodePort: 30002
   type: NodePort
