@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app1
+  labels:                
+    app: app1         
+spec:
+  containers:
+  - image: nginx:latest
+    name: app1
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: app1-volume
+    ports:
+    - containerPort: 80
+      name: http
+      protocol: TCP
+  volumes:
+  - name: app1-volume
+    hostPath:
+      path: /vagrant/volumes/app1/
+      type: Directory
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-service
+spec:
+  selector:
+    app: app1
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+    nodePort: 30000
+  type: NodePort
