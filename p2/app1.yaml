@@ -8,7 +8,7 @@ spec:
   containers:
   - image: nginx:latest
     name: app1
-    volumesMounts:
+    volumeMounts:
     - mountPath: /usr/share/nginx/html
       name: app1-volume
     ports:
@@ -17,7 +17,9 @@ spec:
       protocol: TCP
   volumes:
   - name: app1-volume
-    emptyDir: {}
+    hostPath:
+      path: /vagrant/volumes/app1/
+      type: Directory
 ---
 
 apiVersion: v1

@@ -8,10 +8,18 @@ spec:
   containers:
   - image: nginx:latest
     name: app2
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: app2-volume
     ports:
     - containerPort: 80
       name: http
       protocol: TCP
+  volumes:
+  - name: app2-volume
+    hostPath:
+      path: /vagrant/volumes/app2/
+      type: Directory
 ---
 apiVersion: v1
 kind: Service
