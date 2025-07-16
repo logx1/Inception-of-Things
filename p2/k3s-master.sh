@@ -27,5 +27,6 @@ echo "Kubernetes API server is ready."
 sudo k3s kubectl apply -f /vagrant/app1.yaml
 sudo k3s kubectl apply -f /vagrant/app2.yaml
 sudo k3s kubectl apply -f /vagrant/app3.yaml
+sudo k3s kubectl apply -f /vagrant/ingress.yaml
 
 echo "Applications deployed successfully."
