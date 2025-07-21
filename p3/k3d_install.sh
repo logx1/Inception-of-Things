@@ -13,6 +13,15 @@ sudo service docker start
 # Install k3d
 sudo curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
-# Verify installations
-docker --version
+
+# Install kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+
+# Verify installation
 k3d --version
+kubectl version --client
+
+# Create a k3d cluster
+k3d cluster create mycluster
