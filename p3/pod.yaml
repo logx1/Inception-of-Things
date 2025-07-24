@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: my-container
-      image: nginx:latest
+      image: logx1/django-on-ec2
       ports:
         - containerPort: 80
 ---
@@ -16,12 +16,11 @@ kind: Service
 metadata:
   name: my-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: my-pod
   ports:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30080
 
