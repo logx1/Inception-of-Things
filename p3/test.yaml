@@ -7,9 +7,9 @@ metadata:
 spec:
   containers:
     - name: nginx
-      image: nginx:latest
+      image: logx1/django-on-ec2
       ports:
-        - containerPort: 80
+        - containerPort: 8000
 
 ---
 apiVersion: v1
@@ -24,5 +24,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8000
   type: ClusterIP

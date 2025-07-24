@@ -24,4 +24,7 @@ k3d --version
 kubectl version --client
 
 # Create a k3d cluster
-k3d cluster create mycluster
+k3d cluster create mycluster --port 80:80@loadbalancer
+
+sudo kubectl apply -f /vagrant/pod.yaml
+
