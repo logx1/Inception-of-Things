@@ -26,7 +26,7 @@ kubectl version --client
 # Create a k3d cluster
 k3d cluster create mycluster --port 80:80@loadbalancer --port 443:443@loadbalancer --port 8080:8080@loadbalancer
 
-# sudo kubectl apply -f /vagrant/pod.yaml
+sudo kubectl apply -f /vagrant/pod.yaml
 
 # helm installation
 
