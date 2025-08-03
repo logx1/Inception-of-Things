@@ -22,4 +22,5 @@ argocd app create my-app \
   --repo https://github.com/logx1/Inception-of-Things.git \
   --path p3/app-conf \
   --dest-server https://kubernetes.default.svc \
-  --dest-namespace dev
+  --dest-namespace dev \
+  --sync-policy automated
