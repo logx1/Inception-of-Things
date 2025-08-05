@@ -15,7 +15,7 @@ kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n
 
 PASSWORD=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode)  # Fixed variable assignment
 
-
+sleep 10
 # # LOGIN TO ARGOCD
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
