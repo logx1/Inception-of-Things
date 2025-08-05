@@ -7,7 +7,7 @@ metadata:
 spec:
   containers:
     - name: my-container
-      image: logx1/django-on-ec2:v1
+      image: logx1/django-on-ec2:v2
       ports:
         - containerPort: 80
 ---
