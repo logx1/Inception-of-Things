@@ -1,6 +1,6 @@
 #!/bin/bash
 
-k3d cluster delete k3s-default
+k3d cluster delete --all
 k3d cluster create -p 443:443 --port "8888:8888@loadbalancer"
 kubectl create namespace argocd
 kubectl create namespace dev
