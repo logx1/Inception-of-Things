@@ -23,4 +23,8 @@ argocd app create my-app \
   --path p3/app-conf \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
-  --sync-policy automated
+  --sync-policy automated \
+  --auto-prune \
+  --self-heal
+
+echo "ArgoCD Password: $PASSWORD"
