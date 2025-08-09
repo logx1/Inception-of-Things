@@ -26,7 +26,7 @@ kubectl version --client
 # Create a k3d cluster
 # k3d cluster create mycluster --port 80:80@loadbalancer --port 443:443@loadbalancer --port 8080:8080@loadbalancer --port 8000:8000@loadbalancer
 
-k3d cluster create mycluster --port 80:80 --port 443:443 --port 8080:8080 --port 8000:8000 --port 32080:32080 --port 32443:32443
+k3d cluster create mycluster --port 80:80 --port "443:443@loadbalancer" --port 8080:8080 --port 8000:8000 --port 32080:32080 --port 32443:32443
 
 # sudo kubectl apply -f /vagrant/pod.yaml
 
@@ -34,16 +34,17 @@ k3d cluster create mycluster --port 80:80 --port 443:443 --port 8080:8080 --port
 
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
-# run argocd using helm
-helm repo add argo https://argoproj.github.io/argo-helm
-helm repo update
-helm install argocd argo/argo-cd --set server.service.type=LoadBalancer
-# Wait for ArgoCD to be ready
-# kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n argocd
-# Get the ArgoCD server URL
-# ARGOCD_SERVER=$(kubectl get svc argocd-server -n argocd -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-# Get the initial admin password
-# ARGOCD_PASSWORD=$(kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath='{.data.password}' | base64 --decode)
-# Print the ArgoCD server URL and initial password
-# echo "ArgoCD server is available at: http://$ARGOCD_SERVER"
+# Create namespaces
+kubectl create namespace argocd
+kubectl create namespace dev
+
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+# # Wait for ArgoCD to be ready
+kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n argocd
+
+USERNAME=admin  # Fixed variable assignment
+PASSWORD=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode)  # Fixed variable assignment
+
+kubectl port-forward -n argocd svc/argocd-server 8080:443 &
 
