@@ -32,4 +32,14 @@ argocd app create my-app \
   --auto-prune \
   --self-heal
 
+
+argocd app create gitlab \
+  --repo https://github.com/logx1/Inception-of-Things.git \
+  --path bonus/gitlab \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace gitlab \
+  --sync-policy automated \
+  --auto-prune \
+  --self-heal
+
 echo "ArgoCD Password: $PASSWORD"
