@@ -17,6 +17,12 @@ PASSWORD=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath=
 
 sleep 10
 # # LOGIN TO ARGOCD
+
+echo "Waiting for ArgoCD to be ready..."
+
+echo "ArgoCD Password: $PASSWORD"
+
+echo "Logging in to ArgoCD..."
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
 sleep 5 

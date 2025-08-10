@@ -1,9 +1,10 @@
 #!/bin/bash
 
 k3d cluster delete --all
-k3d cluster create -p 443:443 --port "8888:8888@loadbalancer"
+k3d cluster create -p 443:443 --port "8888:8888@loadbalancer" --port "8080:8080@loadbalancer" --port "8443:8443@loadbalancer" --port "2222:2222@loadbalancer"
 kubectl create namespace argocd
 kubectl create namespace dev
+kubectl create namespace gitlab
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
