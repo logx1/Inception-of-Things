@@ -4,7 +4,7 @@ metadata:
   name: gitlab-config
   namespace: gitlab
 data:
-  gitlab.rb: |
+  override.rb: |
     external_url "http://localhost:8080"
 ---
 apiVersion: v1
@@ -24,8 +24,8 @@ spec:
         - containerPort: 22
       volumeMounts:
         - name: gitlab-config-volume
-          mountPath: /etc/gitlab/gitlab.rb
-          subPath: gitlab.rb
+          mountPath: /etc/gitlab/conf.d/override.rb
+          subPath: override.rb
   volumes:
     - name: gitlab-config-volume
       configMap:
