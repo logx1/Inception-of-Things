@@ -6,6 +6,18 @@ metadata:
 data:
   override.rb: |
     external_url "http://localhost:8080"
+  create-admin-user.sh: |
+    #!/bin/bash
+    gitlab-rails runner "
+    user = User.find_or_initialize_by(email: 'eloualy2021@gmail.com')
+    user.name = 'Administrator'
+    user.username = 'abdel-ou'
+    user.password = 'Facebook2000@'
+    user.password_confirmation = 'Facebook2000'
+    user.admin = true
+    user.save!
+    puts 'Admin user created successfully' if user.persisted?
+    "
 ---
 apiVersion: v1
 kind: Pod
@@ -15,6 +27,13 @@ metadata:
   labels:
     app: gitlab
 spec:
+  initContainers:
+    - name: create-admin-user
+      image: gitlab/gitlab-ce:latest
+      command: ["/bin/bash", "/scripts/create-admin-user.sh"]
+      volumeMounts:
+        - name: gitlab-scripts
+          mountPath: /scripts
   containers:
     - name: gitlab-container
       image: gitlab/gitlab-ce:latest
@@ -28,6 +47,9 @@ spec:
           subPath: override.rb
   volumes:
     - name: gitlab-config-volume
+      configMap:
+        name: gitlab-config
+    - name: gitlab-scripts
       configMap:
         name: gitlab-config
 ---
