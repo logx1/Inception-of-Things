@@ -1,18 +1,7 @@
 apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: gitlab-config
-  namespace: gitlab
-data:
-  gitlab.rb: |
-    external_url "https://localhost"
-    nginx['redirect_http_to_https'] = true
----
-apiVersion: v1
 kind: Pod
 metadata:
   name: gitlab-pod
-  namespace: gitlab
   labels:
     app: gitlab
 spec:
@@ -23,20 +12,11 @@ spec:
         - containerPort: 80
         - containerPort: 443
         - containerPort: 22
-      volumeMounts:
-        - name: gitlab-config-volume
-          mountPath: /etc/gitlab/gitlab.rb
-          subPath: gitlab.rb
-  volumes:
-    - name: gitlab-config-volume
-      configMap:
-        name: gitlab-config
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: gitlab-service
-  namespace: gitlab
 spec:
   type: LoadBalancer
   selector:
