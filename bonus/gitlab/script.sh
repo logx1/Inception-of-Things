@@ -43,6 +43,7 @@ if [[ -n "$TOKEN" ]]; then
   echo "Your personal access token: $TOKEN"
   
   # GitLab instance URL
+  #TOKIN = "qLpHN2lSKxDB5kG2"
   GITLAB_URL="http://localhost:8080"
 
   # Repository details
