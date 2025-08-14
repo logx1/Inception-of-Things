@@ -23,14 +23,14 @@ argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 sleep 5 
 
 
-argocd app create my-app \
-  --repo https://github.com/logx1/Inception-of-Things.git \
-  --path p3/app-conf \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace dev \
-  --sync-policy automated \
-  --auto-prune \
-  --self-heal
+# argocd app create my-app \
+#   --repo https://github.com/logx1/Inception-of-Things.git \
+#   --path p3/app-conf \
+#   --dest-server https://kubernetes.default.svc \
+#   --dest-namespace dev \
+#   --sync-policy automated \
+#   --auto-prune \
+#   --self-heal
 
 
 argocd app create gitlab \
@@ -43,3 +43,39 @@ argocd app create gitlab \
   --self-heal
 
 echo "ArgoCD Password: $PASSWORD"
+
+# keep curl http://localhost:8080/ after he response with 200 OK
+while true; do
+  RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/users/sign_in
+)
+  if [ "$RESPONSE" -eq 200 ]; then
+    echo "ArgoCD is ready!"
+    break
+  else
+    echo "Waiting for ArgoCD to be ready... (HTTP status: $RESPONSE)"
+    sleep 5
+  fi
+done
+
+sleep 10
+
+kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/gitlab/script.sh gitlab/gitlab-pod:/etc/gitlab/script.sh
+
+kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/app-conf/pod.yaml gitlab/gitlab-pod:/etc/gitlab/pod.yaml
+
+sleep 5
+
+kubectl exec -n gitlab -it gitlab-pod -- bash -c "chmod +x /etc/gitlab/script.sh && /etc/gitlab/script.sh"
+
+sleep 10
+
+argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
+
+argocd app create my-app \
+  --repo http://localhost:8080/abdel-ou/django-app-gitlab.git \
+  --path config \
+  --dest-server https://kubernetes.default.svc \
+  --dest-namespace dev \
+  --sync-policy automated \
+  --auto-prune \
+  --self-heal
