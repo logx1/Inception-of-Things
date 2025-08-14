@@ -72,7 +72,7 @@ sleep 10
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
 argocd app create my-app \
-  --repo http://localhost:8080/abdel-ou/django-app-gitlab.git \
+  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/django-app-gitlab.git \
   --path config \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
