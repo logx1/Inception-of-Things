@@ -7,7 +7,7 @@ gitlab-rails runner '
     user = User.new(
       username: "abdel-ou",
       email: "abdel-ou@gmail.com",
-      name: "New Userx",
+      name: "avdelmajid el-oualy",
       password: "Facebook2000@",
       password_confirmation: "Facebook2000@",
       namespace: root_user.namespace, # Associate with the root namespace
