@@ -29,7 +29,7 @@ sudo k3s kubectl apply -f /vagrant/app2.yaml
 sudo k3s kubectl apply -f /vagrant/app3.yaml
 sudo k3s kubectl apply -f /vagrant/ingress.yaml
 
-sudo echo "192.168.56.10 app1.com" | sudo tee -a /etc/hosts
-sudo echo "192.168.56.10 app2.com" | sudo tee -a /etc/hosts
+sudo echo "192.168.56.110 app1.com" | sudo tee -a /etc/hosts
+sudo echo "192.168.56.110 app2.com" | sudo tee -a /etc/hosts
 
 echo "Applications deployed successfully."

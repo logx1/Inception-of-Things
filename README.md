@@ -16,8 +16,8 @@ The labs progress from basic Kubernetes cluster setup to advanced GitOps workflo
 
 The `p1` directory contains a Vagrantfile and provisioning scripts to create a simple 2-node k3s cluster.
 
-- **Master Node:** `abdel-ouS` (192.168.56.10)
-- **Worker Node:** `abdel-ouSW` (192.168.56.11)
+- **Master Node:** `abdel-ouS` (192.168.56.110)
+- **Worker Node:** `abdel-ouSW` (192.168.56.111)
 
 ### Usage
 
