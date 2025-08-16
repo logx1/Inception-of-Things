@@ -24,10 +24,10 @@ done
 echo "Kubernetes API server is ready."
 
 # Deploy applications
-sudo k3s kubectl apply -f /vagrant/app1.yaml
-sudo k3s kubectl apply -f /vagrant/app2.yaml
-sudo k3s kubectl apply -f /vagrant/app3.yaml
-sudo k3s kubectl apply -f /vagrant/ingress.yaml
+sudo k3s kubectl apply -f /vagrant/confs/app1.yaml
+sudo k3s kubectl apply -f /vagrant/confs/app2.yaml
+sudo k3s kubectl apply -f /vagrant/confs/app3.yaml
+sudo k3s kubectl apply -f /vagrant/confs/ingress.yaml
 
 sudo echo "192.168.56.110 app1.com" | sudo tee -a /etc/hosts
 sudo echo "192.168.56.110 app2.com" | sudo tee -a /etc/hosts
