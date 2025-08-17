@@ -7,8 +7,8 @@ kubectl create namespace dev
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
-kubectl apply -k . -n argocd 
-kubectl apply -f ingress.yaml -n argocd
+kubectl apply -k ../confs -n argocd 
+kubectl apply -f ../confs/ingress.yaml -n argocd
 
 kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n argocd
 
