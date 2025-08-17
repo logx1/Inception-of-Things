@@ -42,12 +42,10 @@ TOKEN=$(gitlab-rails runner '
 if [[ -n "$TOKEN" ]]; then
   echo "Your personal access token: $TOKEN"
   
-  # GitLab instance URL
-  #TOKIN = "qLpHN2lSKxDB5kG2"
   GITLAB_URL="http://localhost:8080"
 
   # Repository details
-  PROJECT_NAME="django-app-gitlab"
+  PROJECT_NAME="django-app-gitlab_abdel-ou"
   VISIBILITY="public" # Set repository visibility to public
 
   # Create the repository using the GitLab API

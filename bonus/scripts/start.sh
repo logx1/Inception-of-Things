@@ -19,24 +19,6 @@ kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n
 
 PASSWORD=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode)  # Fixed variable assignment
 
-# sleep 10
-# # # LOGIN TO ARGOCD
-# argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
-
-# sleep 5 
-
-
-
-# argocd app create gitlab \
-#   --repo https://github.com/logx1/Inception-of-Things.git \
-#   --path bonus/gitlab \
-#   --dest-server https://kubernetes.default.svc \
-#   --dest-namespace gitlab \
-#   --sync-policy automated \
-#   --auto-prune \
-#   --self-heal
-
-
 
 echo "ArgoCD Password: $PASSWORD"
 
@@ -68,7 +50,7 @@ sleep 10
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
 argocd app create my-app \
-  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/django-app-gitlab.git \
+  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/django-app-gitlab_abdel-ou.git \
   --path config \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
