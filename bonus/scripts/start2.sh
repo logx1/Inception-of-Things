@@ -8,39 +8,35 @@ kubectl create namespace gitlab
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 
-kubectl apply -k . -n argocd 
-kubectl apply -f ingress.yaml -n argocd
+kubectl apply -k ../confs -n argocd 
+kubectl apply -f ../confs/ingress.yaml -n argocd
+
+kubectl apply -f ../confs/gitlab.yaml -n gitlab
 
 kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n argocd
 
 
+
 PASSWORD=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode)  # Fixed variable assignment
 
-sleep 10
-# # LOGIN TO ARGOCD
-argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
+# sleep 10
+# # # LOGIN TO ARGOCD
+# argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
-sleep 5 
+# sleep 5 
 
 
-# argocd app create my-app \
+
+# argocd app create gitlab \
 #   --repo https://github.com/logx1/Inception-of-Things.git \
-#   --path p3/app-conf \
+#   --path bonus/gitlab \
 #   --dest-server https://kubernetes.default.svc \
-#   --dest-namespace dev \
+#   --dest-namespace gitlab \
 #   --sync-policy automated \
 #   --auto-prune \
 #   --self-heal
 
 
-argocd app create gitlab \
-  --repo https://github.com/logx1/Inception-of-Things.git \
-  --path bonus/gitlab \
-  --dest-server https://kubernetes.default.svc \
-  --dest-namespace gitlab \
-  --sync-policy automated \
-  --auto-prune \
-  --self-heal
 
 echo "ArgoCD Password: $PASSWORD"
 
@@ -49,23 +45,23 @@ while true; do
   RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/users/sign_in
 )
   if [ "$RESPONSE" -eq 200 ]; then
-    echo "ArgoCD is ready!"
+    echo "GitLab is ready! (HTTP status: $RESPONSE)"
     break
   else
-    echo "Waiting for ArgoCD to be ready... (HTTP status: $RESPONSE)"
+    echo "Waiting for GitLab to be ready... (HTTP status: $RESPONSE)"
     sleep 5
   fi
 done
 
 sleep 10
 
-kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/gitlab/script.sh gitlab/gitlab-pod:/etc/gitlab/script.sh
+kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/scripts/gitlab_script.sh gitlab/gitlab-pod:/etc/gitlab/gitlab_script.sh
 
-kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/app-conf/pod.yaml gitlab/gitlab-pod:/etc/gitlab/pod.yaml
+kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/confs/pod.yaml gitlab/gitlab-pod:/etc/gitlab/pod.yaml
 
 sleep 5
 
-kubectl exec -n gitlab -it gitlab-pod -- bash -c "chmod +x /etc/gitlab/script.sh && /etc/gitlab/script.sh"
+kubectl exec -n gitlab -it gitlab-pod -- bash -c "chmod +x /etc/gitlab/gitlab_script.sh && /etc/gitlab/gitlab_script.sh"
 
 sleep 10
 
