@@ -45,12 +45,12 @@ sleep 5
 
 kubectl exec -n gitlab -it gitlab-pod -- bash -c "chmod +x /etc/gitlab/gitlab_script.sh && /etc/gitlab/gitlab_script.sh"
 
-sleep 10
+sleep 15
 
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
 argocd app create my-app \
-  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/django-app-gitlab_abdel-ou.git \
+  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/django-app-gitlab-abdel-ou.git \
   --path config \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
