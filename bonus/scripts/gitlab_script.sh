@@ -83,7 +83,8 @@ git config --global user.email "abdel-ou@gmail.com"
 echo "Adding test code..."
 echo "# Django App GitLab" > README.md
 mkdir config
-echo "sample pod configuration" > config/pod.yaml
+
+cp /etc/gitlab/pod.yaml ./config
 
 git checkout -b main || git checkout main
 git add .
