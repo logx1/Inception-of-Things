@@ -25,7 +25,7 @@ echo "ArgoCD Password: $PASSWORD"
 echo "Logging in to ArgoCD..."
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
-sleep 5 
+# sleep 5 
 
 
 argocd app create my-app \
