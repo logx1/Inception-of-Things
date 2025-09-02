@@ -51,7 +51,7 @@ echo "Your personal access token: $TOKEN"
 # Step 3: Create a public repository
 echo "Creating repository..."
 GITLAB_URL="http://localhost:8080"
-PROJECT_NAME="django-app-gitlab-abdel-ou"
+PROJECT_NAME="gabdel-ou"
 VISIBILITY="public"
 
 RESPONSE=$(curl --silent --request POST "${GITLAB_URL}/api/v4/projects" \

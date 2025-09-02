@@ -13,7 +13,7 @@ kubectl apply -f ../confs/ingress.yaml -n argocd
 
 kubectl apply -f ../confs/gitlab.yaml -n gitlab
 
-kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n argocd
+kubectl wait --for=condition=available --timeout=1000s deployment/argocd-server -n argocd
 
 
 
@@ -50,7 +50,7 @@ sleep 15
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
 argocd app create my-app \
-  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/django-app-gitlab-abdel-ou.git \
+  --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/gabdel-ou.git \
   --path config \
   --dest-server https://kubernetes.default.svc \
   --dest-namespace dev \
