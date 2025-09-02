@@ -10,8 +10,9 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl apply -k ../confs -n argocd 
 kubectl apply -f ../confs/ingress.yaml -n argocd
 
-kubectl wait --for=condition=available --timeout=60s deployment/argocd-server -n argocd
+kubectl wait --for=condition=available --timeout=120s deployment/argocd-server -n argocd
 
+sleep 10
 
 PASSWORD=$(kubectl get secret -n argocd argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 --decode)  # Fixed variable assignment
 
@@ -25,7 +26,7 @@ echo "ArgoCD Password: $PASSWORD"
 echo "Logging in to ArgoCD..."
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
-# sleep 5 
+sleep 5 
 
 
 argocd app create my-app \
