@@ -1,6 +1,10 @@
 #!/bin/bash
 
 k3d cluster delete --all
+docker rm -f $(docker ps -aq) 2>/dev/null
+docker rmi -f $(docker images -aq) 2>/dev/null
+docker volume rm $(docker volume ls -q) 2>/dev/null
+docker system prune -af
 k3d cluster create -p 443:443 --port "8888:8888@loadbalancer" --port "8080:8080@loadbalancer" --port "8443:8443@loadbalancer" --port "2222:2222@loadbalancer"
 kubectl create namespace argocd
 kubectl create namespace dev
