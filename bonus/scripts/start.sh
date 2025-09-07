@@ -49,7 +49,7 @@ sleep 5
 
 kubectl exec -n gitlab -it gitlab-pod -- bash -c "chmod +x /etc/gitlab/gitlab_script.sh && /etc/gitlab/gitlab_script.sh"
 
-sleep 15
+sleep 120
 
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
 
@@ -60,4 +60,5 @@ argocd app create my-app \
   --dest-namespace dev \
   --sync-policy automated \
   --auto-prune \
-  --self-heal
+  --self-heal \
+  --grpc-web
