@@ -10,7 +10,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl apply -k ../confs -n argocd 
 kubectl apply -f ../confs/ingress.yaml -n argocd
 
-kubectl wait --for=condition=available --timeout=300s deployment/argocd-server -n argocd
+kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n argocd
 
 sleep 30  # Increased sleep time
 
@@ -22,7 +22,7 @@ echo "ArgoCD Password: $PASSWORD"
 echo "Logging in to ArgoCD..."
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure --grpc-web
 
-sleep 5 
+sleep 15 
 
 argocd app create my-app \
   --repo https://github.com/logx1/k3d_abdel-ou.git \
