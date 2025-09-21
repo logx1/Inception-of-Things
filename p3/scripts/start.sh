@@ -22,7 +22,7 @@ echo "ArgoCD Password: $PASSWORD"
 echo "Logging in to ArgoCD..."
 argocd login localhost:443 --username admin --password "$PASSWORD" --insecure --grpc-web
 
-sleep 15 
+kubectl config set-context --current --namespace=argocd
 
 argocd app create my-app \
   --repo https://github.com/logx1/k3d_abdel-ou.git \

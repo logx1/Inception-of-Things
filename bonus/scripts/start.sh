@@ -4,6 +4,7 @@ k3d cluster delete --all
 docker rm -f $(docker ps -aq) 2>/dev/null
 docker rmi -f $(docker images -aq) 2>/dev/null
 docker volume rm $(docker volume ls -q) 2>/dev/null
+docker network prune -f
 docker system prune -af
 k3d cluster create -p 443:443 --port "8888:8888@loadbalancer" --port "8080:8080@loadbalancer" --port "8443:8443@loadbalancer" --port "2222:2222@loadbalancer"
 kubectl create namespace argocd
@@ -45,13 +46,15 @@ kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/scripts/gitlab_scri
 
 kubectl cp /Users/abdel-ou/Desktop/Inception-of-Things/bonus/confs/pod.yaml gitlab/gitlab-pod:/etc/gitlab/pod.yaml
 
-sleep 5
+# sleep 5
 
 kubectl exec -n gitlab -it gitlab-pod -- bash -c "chmod +x /etc/gitlab/gitlab_script.sh && /etc/gitlab/gitlab_script.sh"
 
-sleep 120
+sleep 5
 
-argocd login localhost:443 --username admin --password "$PASSWORD" --insecure
+argocd login localhost:443 --username admin --password "$PASSWORD" --insecure --grpc-web
+
+kubectl config set-context --current --namespace=argocd
 
 argocd app create my-app \
   --repo http://gitlab-service.gitlab.svc.cluster.local:8080/abdel-ou/gabdel-ou.git \
